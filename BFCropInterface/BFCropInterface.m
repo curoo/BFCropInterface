@@ -63,6 +63,10 @@
     UIView *bottomRightView;
     
     UIImage *_nodeImage;
+    UIImageView *tlnode;
+    UIImageView *trnode;
+    UIImageView *blnode;
+    UIImageView *brnode;
 }
 
 @end
@@ -70,11 +74,6 @@
 @implementation BFCropInterface
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image
-{
-    return [self initWithFrame:frame andImage:image andNodeImage:nil];
-}
-
-- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andNodeImage:(UIImage *)nodeImage;
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -84,7 +83,7 @@
 
         // set image to crop
         self.image = image;
-        _nodeImage = nodeImage? : [UIImage imageNamed:@"node.png"];
+        self.nodeImage = [UIImage imageNamed:@"node.png"];
 
         topView = [self newEdgeView];
         bottomView = [self newEdgeView];
@@ -117,10 +116,10 @@
     cropView.layer.borderWidth = 1.0;
     cropView.backgroundColor = [UIColor clearColor];
     
-    UIImageView *tlnode = [[UIImageView alloc]initWithImage:_nodeImage];
-    UIImageView *trnode = [[UIImageView alloc]initWithImage:_nodeImage];
-    UIImageView *blnode = [[UIImageView alloc]initWithImage:_nodeImage];
-    UIImageView *brnode = [[UIImageView alloc]initWithImage:_nodeImage];
+    tlnode = [[UIImageView alloc]initWithImage:self.nodeImage];
+    trnode = [[UIImageView alloc]initWithImage:self.nodeImage];
+    blnode = [[UIImageView alloc]initWithImage:self.nodeImage];
+    brnode = [[UIImageView alloc]initWithImage:self.nodeImage];
     tlnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.bounds.origin.y -13, 26, 26);
     trnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.bounds.origin.y -13, 26, 26);
     blnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.frame.size.height - 13, 26, 26);
@@ -130,14 +129,14 @@
     trnode.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
     blnode.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     brnode.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-    
-    self.cropView = cropView;
-    [self addSubview:self.cropView];
-    
+   
     [cropView addSubview:tlnode];
     [cropView addSubview:trnode];
     [cropView addSubview:blnode];
     [cropView addSubview:brnode];
+    
+    self.cropView = cropView;
+    [self addSubview:self.cropView];
     
     [self updateBounds];
 }
@@ -566,6 +565,18 @@
     UIView *view = [self newEdgeView];
     view.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.60];
     return view;
+}
+
+- (void)setNodeImage:(UIImage *)nodeImage {
+    _nodeImage = nodeImage;
+    tlnode.image = nodeImage;
+    trnode.image = nodeImage;
+    blnode.image = nodeImage;
+    brnode.image = nodeImage;
+}
+
+- (UIImage *)nodeImage {
+    return _nodeImage? : [UIImage imageNamed:@"node.png"];
 }
 
 @end
