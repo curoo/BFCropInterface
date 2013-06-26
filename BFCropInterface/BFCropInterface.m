@@ -61,6 +61,8 @@
     UIView *topRightView;
     UIView *bottomLeftView;
     UIView *bottomRightView;
+    
+    UIImage *_nodeImage;
 }
 
 @end
@@ -68,6 +70,11 @@
 @implementation BFCropInterface
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image
+{
+    return [self initWithFrame:frame andImage:image andNodeImage:nil];
+}
+
+- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andNodeImage:(UIImage *)nodeImage;
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -77,6 +84,7 @@
 
         // set image to crop
         self.image = image;
+        _nodeImage = nodeImage? : [UIImage imageNamed:@"node.png"];
 
         topView = [self newEdgeView];
         bottomView = [self newEdgeView];
@@ -109,11 +117,10 @@
     cropView.layer.borderWidth = 1.0;
     cropView.backgroundColor = [UIColor clearColor];
     
-    UIImage *nodeImage = [UIImage imageNamed:@"node.png"];
-    UIImageView *tlnode = [[UIImageView alloc]initWithImage:nodeImage];
-    UIImageView *trnode = [[UIImageView alloc]initWithImage:nodeImage];
-    UIImageView *blnode = [[UIImageView alloc]initWithImage:nodeImage];
-    UIImageView *brnode = [[UIImageView alloc]initWithImage:nodeImage];
+    UIImageView *tlnode = [[UIImageView alloc]initWithImage:_nodeImage];
+    UIImageView *trnode = [[UIImageView alloc]initWithImage:_nodeImage];
+    UIImageView *blnode = [[UIImageView alloc]initWithImage:_nodeImage];
+    UIImageView *brnode = [[UIImageView alloc]initWithImage:_nodeImage];
     tlnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.bounds.origin.y -13, 26, 26);
     trnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.bounds.origin.y -13, 26, 26);
     blnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.frame.size.height - 13, 26, 26);

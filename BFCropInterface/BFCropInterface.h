@@ -32,8 +32,10 @@
 @property (nonatomic, strong) UIColor *shadowColor;
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic) BOOL fixedAspectRatio;
+@property (nonatomic) BOOL allowTapToResize;
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
+- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andNodeImage:(UIImage *)nodeImage;
 - (UIImage*)getCroppedImage;
 
 @end

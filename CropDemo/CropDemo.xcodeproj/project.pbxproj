@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52503656177B834500A38D43 /* BFCropInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 52503655177B820A00A38D43 /* BFCropInterface.m */; };
 		A3FB3BCC16DFB17A00703987 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FB3BCB16DFB17A00703987 /* UIKit.framework */; };
 		A3FB3BCE16DFB17A00703987 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FB3BCD16DFB17A00703987 /* Foundation.framework */; };
 		A3FB3BD016DFB17A00703987 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3FB3BCF16DFB17A00703987 /* CoreGraphics.framework */; };
@@ -197,6 +198,7 @@
 				A3FB3BD816DFB17A00703987 /* main.m in Sources */,
 				A3FB3BDC16DFB17A00703987 /* BFAppDelegate.m in Sources */,
 				A3FB3BEB16DFB17A00703987 /* BFViewController.m in Sources */,
+				52503656177B834500A38D43 /* BFCropInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
