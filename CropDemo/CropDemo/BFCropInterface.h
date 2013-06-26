@@ -25,27 +25,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BFCropInterface : UIImageView {
-    BOOL isPanning;
-    NSInteger currentTouches;
-    CGPoint panTouch;
-    CGFloat scaleDistance;
-    UIView *currentDragView; 
-    
-    UIView *topView;
-    UIView *bottomView;
-    UIView *leftView;
-    UIView *rightView;
-    
-    UIView *topLeftView;
-    UIView *topRightView;
-    UIView *bottomLeftView;
-    UIView *bottomRightView;
-}
+@interface BFCropInterface : UIImageView
+
 @property (nonatomic, assign) CGRect crop;
 @property (nonatomic, strong) UIView *cropView;
 @property (nonatomic, strong) UIColor *shadowColor;
 @property (nonatomic, strong) UIColor *borderColor;
+@property (nonatomic) BOOL fixedAspectRatio;
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
 - (UIImage*)getCroppedImage;

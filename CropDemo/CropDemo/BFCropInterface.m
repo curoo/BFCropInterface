@@ -45,6 +45,26 @@
 #define CGOriginY(rect)                 rect.origin.y
 #endif
 
+@interface BFCropInterface () {
+    BOOL isPanning;
+    NSInteger currentTouches;
+    CGPoint panTouch;
+    CGFloat scaleDistance;
+    UIView *currentDragView;
+    
+    UIView *topView;
+    UIView *bottomView;
+    UIView *leftView;
+    UIView *rightView;
+    
+    UIView *topLeftView;
+    UIView *topRightView;
+    UIView *bottomLeftView;
+    UIView *bottomRightView;
+}
+
+@end
+
 @implementation BFCropInterface
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image
