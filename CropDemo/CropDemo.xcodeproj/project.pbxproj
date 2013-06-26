@@ -20,12 +20,13 @@
 		A3FB3BE816DFB17A00703987 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3FB3BE616DFB17A00703987 /* MainStoryboard_iPad.storyboard */; };
 		A3FB3BEB16DFB17A00703987 /* BFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3FB3BEA16DFB17A00703987 /* BFViewController.m */; };
 		A3FB3BF416DFB4F100703987 /* dumbo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3FB3BF316DFB4F100703987 /* dumbo.jpg */; };
-		A3FB3BF816DFB9EE00703987 /* BFCropInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = A3FB3BF616DFB72000703987 /* BFCropInterface.m */; };
 		A3FB3BFB16DFBE6100703987 /* node@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3FB3BF916DFBE6100703987 /* node@2x.png */; };
 		A3FB3BFC16DFBE6100703987 /* node.png in Resources */ = {isa = PBXBuildFile; fileRef = A3FB3BFA16DFBE6100703987 /* node.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52503654177B820A00A38D43 /* BFCropInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BFCropInterface.h; path = ../../BFCropInterface/BFCropInterface.h; sourceTree = "<group>"; };
+		52503655177B820A00A38D43 /* BFCropInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BFCropInterface.m; path = ../../BFCropInterface/BFCropInterface.m; sourceTree = "<group>"; };
 		A3FB3BC816DFB17A00703987 /* CropDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CropDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3FB3BCB16DFB17A00703987 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A3FB3BCD16DFB17A00703987 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -44,8 +45,6 @@
 		A3FB3BE916DFB17A00703987 /* BFViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFViewController.h; sourceTree = "<group>"; };
 		A3FB3BEA16DFB17A00703987 /* BFViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFViewController.m; sourceTree = "<group>"; };
 		A3FB3BF316DFB4F100703987 /* dumbo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dumbo.jpg; sourceTree = "<group>"; };
-		A3FB3BF616DFB72000703987 /* BFCropInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFCropInterface.m; sourceTree = "<group>"; };
-		A3FB3BF716DFB72000703987 /* BFCropInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFCropInterface.h; sourceTree = "<group>"; };
 		A3FB3BF916DFBE6100703987 /* node@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "node@2x.png"; sourceTree = "<group>"; };
 		A3FB3BFA16DFBE6100703987 /* node.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = node.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,8 +99,8 @@
 				A3FB3BE616DFB17A00703987 /* MainStoryboard_iPad.storyboard */,
 				A3FB3BE916DFB17A00703987 /* BFViewController.h */,
 				A3FB3BEA16DFB17A00703987 /* BFViewController.m */,
-				A3FB3BF716DFB72000703987 /* BFCropInterface.h */,
-				A3FB3BF616DFB72000703987 /* BFCropInterface.m */,
+				52503654177B820A00A38D43 /* BFCropInterface.h */,
+				52503655177B820A00A38D43 /* BFCropInterface.m */,
 				A3FB3BD216DFB17A00703987 /* Supporting Files */,
 			);
 			path = CropDemo;
@@ -195,7 +194,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3FB3BF816DFB9EE00703987 /* BFCropInterface.m in Sources */,
 				A3FB3BD816DFB17A00703987 /* main.m in Sources */,
 				A3FB3BDC16DFB17A00703987 /* BFAppDelegate.m in Sources */,
 				A3FB3BEB16DFB17A00703987 /* BFViewController.m in Sources */,
@@ -331,6 +329,7 @@
 				A3FB3BF016DFB17A00703987 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
