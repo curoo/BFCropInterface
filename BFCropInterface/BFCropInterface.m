@@ -131,13 +131,13 @@
     blnode.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     brnode.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     
+    self.cropView = cropView;
+    [self addSubview:self.cropView];
+    
     [cropView addSubview:tlnode];
     [cropView addSubview:trnode];
     [cropView addSubview:blnode];
     [cropView addSubview:brnode];
-    
-    self.cropView = cropView;
-    [self addSubview:self.cropView];
     
     [self updateBounds];
 }
