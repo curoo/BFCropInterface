@@ -80,6 +80,7 @@
         // Initialization code
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.userInteractionEnabled = YES;
+        self.allowTapToResize = YES;
 
         // set image to crop
         self.image = image;
@@ -191,13 +192,13 @@
             CGFloat y = touch.y;
             
             currentDragView = nil;
-            
+                        
             // We start dragging if we're within the rect + the inset amount
             // If we're definitively in the rect we actually start moving right to the point
             if (CGRectContainsPoint(CGRectInset(topLeftView.frame, -insetAmount, -insetAmount), touch)) {
                 currentDragView = topLeftView;
                 
-                if (CGRectContainsPoint(topLeftView.frame, touch)) {
+                if (CGRectContainsPoint(topLeftView.frame, touch) && self.allowTapToResize) {
                     frame.size.width += CGOriginX(frame) - x;
                     frame.size.height += CGOriginY(frame) - y;
                     frame.origin = touch;
@@ -206,7 +207,7 @@
             else if (CGRectContainsPoint(CGRectInset(topRightView.frame, -insetAmount, -insetAmount), touch)) {
                 currentDragView = topRightView;
                 
-                if (CGRectContainsPoint(topRightView.frame, touch)) {
+                if (CGRectContainsPoint(topRightView.frame, touch) && self.allowTapToResize) {
                     frame.size.height += CGOriginY(frame) - y;
                     frame.origin.y = y;
                     frame.size.width = x - CGOriginX(frame);
@@ -215,7 +216,7 @@
             else if (CGRectContainsPoint(CGRectInset(bottomLeftView.frame, -insetAmount, -insetAmount), touch)) {
                 currentDragView = bottomLeftView;
                 
-                if (CGRectContainsPoint(bottomLeftView.frame, touch)) {
+                if (CGRectContainsPoint(bottomLeftView.frame, touch) && self.allowTapToResize) {
                     frame.size.width += CGOriginX(frame) - x;
                     frame.size.height = y - CGOriginY(frame);
                     frame.origin.x =x;
@@ -224,7 +225,7 @@
             else if (CGRectContainsPoint(CGRectInset(bottomRightView.frame, -insetAmount, -insetAmount), touch)) {
                 currentDragView = bottomRightView;
                 
-                if (CGRectContainsPoint(bottomRightView.frame, touch)) {
+                if (CGRectContainsPoint(bottomRightView.frame, touch) && self.allowTapToResize) {
                     frame.size.width = x - CGOriginX(frame);
                     frame.size.height = y - CGOriginY(frame);
                 }
@@ -232,7 +233,7 @@
             else if (CGRectContainsPoint(CGRectInset(topView.frame, 0, -insetAmount), touch)) {
                 currentDragView = topView;
                 
-                if (CGRectContainsPoint(topView.frame, touch)) {
+                if (CGRectContainsPoint(topView.frame, touch) && self.allowTapToResize) {
                     frame.size.height += CGOriginY(frame) - y;
                     frame.origin.y = y;
                 }
@@ -240,14 +241,14 @@
             else if (CGRectContainsPoint(CGRectInset(bottomView.frame, 0, -insetAmount), touch)) {
                 currentDragView = bottomView;
                 
-                if (CGRectContainsPoint(bottomView.frame, touch)) {
+                if (CGRectContainsPoint(bottomView.frame, touch) && self.allowTapToResize) {
                     frame.size.height = y - CGOriginY(frame);
                 }
             }
             else if (CGRectContainsPoint(CGRectInset(leftView.frame, -insetAmount, 0), touch)) {
                 currentDragView = leftView;
                 
-                if (CGRectContainsPoint(leftView.frame, touch)) {
+                if (CGRectContainsPoint(leftView.frame, touch) && self.allowTapToResize) {
                     frame.size.width += CGOriginX(frame) - x;
                     frame.origin.x = x;
                 }
@@ -255,7 +256,7 @@
             else if (CGRectContainsPoint(CGRectInset(rightView.frame, -insetAmount, 0), touch)) {
                 currentDragView = rightView;
                 
-                if (CGRectContainsPoint(rightView.frame, touch)) {
+                if (CGRectContainsPoint(rightView.frame, touch) && self.allowTapToResize) {
                     frame.size.width = x - CGOriginX(frame);
                 }
             }

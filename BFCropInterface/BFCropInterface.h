@@ -32,7 +32,17 @@
 @property (nonatomic, strong) UIColor *shadowColor;
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, strong) UIImage *nodeImage;
+
+/**
+ If YES, cropView will keep original aspectration (as set in cropView)
+ Default is NO
+ */
 @property (nonatomic) BOOL fixedAspectRatio;
+
+/**
+ Enable or disable single tap to resize cropView to tap coordinates.
+ Default is YES
+ */
 @property (nonatomic) BOOL allowTapToResize;
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
