@@ -51,6 +51,7 @@
     CGPoint panTouch;
     CGFloat scaleDistance;
     UIView *currentDragView;
+    CGFloat aspectRatio;
     
     UIView *topView;
     UIView *bottomView;
@@ -110,11 +111,12 @@
     height = self.frame.size.height / 4 * 3;
     x      = (self.frame.size.width - width) / 2;
     y      = (self.frame.size.height - height) / 2;
+    aspectRatio = floor (height / width * 2) / 2;
     
     UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     cropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     cropView.layer.borderColor = [[UIColor whiteColor] CGColor];
-    cropView.layer.borderWidth = 1.0;
+    cropView.layer.borderWidth = 0.5;
     cropView.backgroundColor = [UIColor clearColor];
     
     tlnode = [[UIImageView alloc]initWithImage:self.nodeImage];
@@ -170,6 +172,11 @@
     return sqrt(x * x + y * y);
 }
 
+- (void)setPanTouch:(CGPoint)touch {
+    isPanning = YES;
+    panTouch = touch;
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self willChangeValueForKey:@"crop"];
     NSSet *allTouches = [event allTouches];
@@ -182,8 +189,8 @@
             
             CGPoint touch = [[allTouches anyObject] locationInView:self];
             if (CGRectContainsPoint(CGRectInset(self.cropView.frame, insetAmount, insetAmount), touch)) {
-                isPanning = YES;
-                panTouch = touch;
+                
+                [self setPanTouch:touch];
                 return;
             }
             
@@ -231,33 +238,53 @@
                 }
             }
             else if (CGRectContainsPoint(CGRectInset(topView.frame, 0, -insetAmount), touch)) {
-                currentDragView = topView;
                 
-                if (CGRectContainsPoint(topView.frame, touch) && self.allowTapToResize) {
-                    frame.size.height += CGOriginY(frame) - y;
-                    frame.origin.y = y;
+                if (self.fixedAspectRatio)
+                    [self setPanTouch:touch];
+                else {
+                    currentDragView = topView;
+                    
+                    if (CGRectContainsPoint(topView.frame, touch) && self.allowTapToResize) {
+                        frame.size.height += CGOriginY(frame) - y;
+                        frame.origin.y = y;
+                    }
                 }
             }
             else if (CGRectContainsPoint(CGRectInset(bottomView.frame, 0, -insetAmount), touch)) {
-                currentDragView = bottomView;
                 
-                if (CGRectContainsPoint(bottomView.frame, touch) && self.allowTapToResize) {
-                    frame.size.height = y - CGOriginY(frame);
+                if (self.fixedAspectRatio)
+                    [self setPanTouch:touch];
+                else {
+                    currentDragView = bottomView;
+                    
+                    if (CGRectContainsPoint(bottomView.frame, touch) && self.allowTapToResize) {
+                        frame.size.height = y - CGOriginY(frame);
+                    }
                 }
             }
             else if (CGRectContainsPoint(CGRectInset(leftView.frame, -insetAmount, 0), touch)) {
-                currentDragView = leftView;
                 
-                if (CGRectContainsPoint(leftView.frame, touch) && self.allowTapToResize) {
-                    frame.size.width += CGOriginX(frame) - x;
-                    frame.origin.x = x;
+                if (self.fixedAspectRatio)
+                    [self setPanTouch:touch];
+                else {
+                    currentDragView = leftView;
+                    
+                    if (CGRectContainsPoint(leftView.frame, touch) && self.allowTapToResize) {
+                        frame.size.width += CGOriginX(frame) - x;
+                        frame.origin.x = x;
+                    }
                 }
             }
             else if (CGRectContainsPoint(CGRectInset(rightView.frame, -insetAmount, 0), touch)) {
-                currentDragView = rightView;
-                
-                if (CGRectContainsPoint(rightView.frame, touch) && self.allowTapToResize) {
-                    frame.size.width = x - CGOriginX(frame);
+
+                if (self.fixedAspectRatio)
+                    [self setPanTouch:touch];
+                else {
+                    currentDragView = rightView;
+                    
+                    if (CGRectContainsPoint(rightView.frame, touch) && self.allowTapToResize) {
+                        frame.size.width = x - CGOriginX(frame);
+                    }
                 }
             }
             
@@ -303,19 +330,21 @@
                 CGRect frame = self.cropView.frame;
                 CGFloat x = touch.x;
                 CGFloat y = touch.y;
+
+                if ((x > self.frame.size.width || y > self.frame.size.height) && self.fixedAspectRatio)
+                    return;
                 
                 if (x > self.frame.size.width)
                     x = self.frame.size.width;
                 
                 if (y > self.frame.size.height)
                     y = self.frame.size.height;
-                
+                                
                 if (currentDragView == topView) {
                     frame.size.height += CGOriginY(frame) - y;
                     frame.origin.y = y;
                 }
                 else if (currentDragView == bottomView) {
-                    //currentDragView = bottomView;
                     frame.size.height = y - CGOriginY(frame);
                 }
                 else if (currentDragView == leftView) {
@@ -323,27 +352,29 @@
                     frame.origin.x = x;
                 }
                 else if (currentDragView == rightView) {
-                    //currentDragView = rightView;
                     frame.size.width = x - CGOriginX(frame);
                 }
                 else if (currentDragView == topLeftView) {
                     frame.size.width += CGOriginX(frame) - x;
-                    frame.size.height += CGOriginY(frame) - y;
+                    if (self.fixedAspectRatio)
+                        frame.size.height = frame.size.width * aspectRatio;
+                    else
+                        frame.size.height += CGOriginY(frame) - y;
                     frame.origin = touch;
                 }
                 else if (currentDragView == topRightView) {
                     frame.size.height += CGOriginY(frame) - y;
                     frame.origin.y = y;
-                    frame.size.width = x - CGOriginX(frame);
+                    frame.size.width = self.fixedAspectRatio? frame.size.height / aspectRatio : x - CGOriginX(frame);
                 }
                 else if (currentDragView == bottomLeftView) {
                     frame.size.width += CGOriginX(frame) - x;
-                    frame.size.height = y - CGOriginY(frame);
-                    frame.origin.x =x;
+                    frame.size.height = self.fixedAspectRatio? frame.size.width * aspectRatio : y - CGOriginY(frame);
+                    frame.origin.x = x;
                 }
                 else if ( currentDragView == bottomRightView) {
                     frame.size.width = x - CGOriginX(frame);
-                    frame.size.height = y - CGOriginY(frame);
+                    frame.size.height = self.fixedAspectRatio? frame.size.width * aspectRatio : y - CGOriginY(frame);
                 }
                 
                 self.cropView.frame = frame;
@@ -551,6 +582,9 @@
             change = YES;
         }
     } while (change);
+    
+    if (self.fixedAspectRatio)
+        frame.size.height = frame.size.width * aspectRatio;
     
     self.cropView.frame = frame;
 }
