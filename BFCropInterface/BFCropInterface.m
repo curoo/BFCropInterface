@@ -356,11 +356,15 @@
                 }
                 else if (currentDragView == topLeftView) {
                     frame.size.width += CGOriginX(frame) - x;
-                    if (self.fixedAspectRatio)
+                    if (self.fixedAspectRatio) {
+                        frame.origin.x = x;
+                        frame.origin.y += frame.size.height - frame.size.width * aspectRatio;
                         frame.size.height = frame.size.width * aspectRatio;
-                    else
+                    }
+                    else {
+                        frame.origin = touch;
                         frame.size.height += CGOriginY(frame) - y;
-                    frame.origin = touch;
+                    }
                 }
                 else if (currentDragView == topRightView) {
                     frame.size.height += CGOriginY(frame) - y;
