@@ -618,4 +618,10 @@
     return _nodeImage? : [UIImage imageNamed:@"node.png"];
 }
 
+- (void)setFixedAspectRatio:(BOOL)fixedAspectRatio
+{
+    _fixedAspectRatio = fixedAspectRatio;
+    [self updateBounds];
+}
+
 @end
