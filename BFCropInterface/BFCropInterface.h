@@ -45,6 +45,7 @@
  */
 @property (nonatomic) BOOL allowTapToResize;
 
+- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andCropViewBounds:(CGRect)cropBounds;
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
 - (UIImage*)getCroppedImage;
 
