@@ -29,6 +29,8 @@
 #define IMAGE_CROPPER_OUTSIDE_STILL_TOUCHABLE 40.0f
 #define IMAGE_CROPPER_INSIDE_STILL_EDGE 20.0f
 
+#define NODE_SIZE 40.0f
+
 #ifndef CGWidth
 #define CGWidth(rect)                   rect.size.width
 #endif
@@ -76,6 +78,12 @@
 
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image
 {
+    return [self initWithFrame:frame andImage:image andCropViewBounds:CGRectNull];
+}
+
+
+- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andCropViewBounds:(CGRect)cropBounds
+{
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -96,24 +104,30 @@
         bottomLeftView = [self newCornerView];
         bottomRightView = [self newCornerView];
         
-        [self initialCropView];
+        if (CGRectIsNull(cropBounds)) {
+            CGRect rect;
+            
+            rect.size.width  = self.frame.size.width / 4 * 3;
+            rect.size.height = self.frame.size.height / 4 * 3;
+            rect.origin.x      = (self.frame.size.width - rect.size.width) / 2;
+            rect.origin.y      = (self.frame.size.height - rect.size.height) / 2;
+            
+            [self initialCropViewWithBounds:rect];
+        } else {
+            [self initialCropViewWithBounds:cropBounds];
+        }
     }
     return self;
 }
 
-- (void)initialCropView {
-    CGFloat width;
-    CGFloat height;
-    CGFloat x;
-    CGFloat y;
+- (void)initialCropViewWithBounds:(CGRect)frame {
+
+//    aspectRatio = floor (height / width * 2) / 2;
+    aspectRatio = floor (frame.size.height / frame.size.width * 2) / 2;
     
-    width  = self.frame.size.width / 4 * 3;
-    height = self.frame.size.height / 4 * 3;
-    x      = (self.frame.size.width - width) / 2;
-    y      = (self.frame.size.height - height) / 2;
-    aspectRatio = floor (height / width * 2) / 2;
-    
-    UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+//    UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    UIView *cropView = [[UIView alloc] initWithFrame:frame];
+    cropView.center = self.center;
     cropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     cropView.layer.borderColor = [[UIColor whiteColor] CGColor];
     cropView.layer.borderWidth = 0.5;
@@ -123,10 +137,11 @@
     trnode = [[UIImageView alloc]initWithImage:self.nodeImage];
     blnode = [[UIImageView alloc]initWithImage:self.nodeImage];
     brnode = [[UIImageView alloc]initWithImage:self.nodeImage];
-    tlnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.bounds.origin.y -13, 26, 26);
-    trnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.bounds.origin.y -13, 26, 26);
-    blnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.frame.size.height - 13, 26, 26);
-    brnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.frame.size.height - 13, 26, 26);
+    tlnode.contentMode = trnode.contentMode = blnode.contentMode = brnode.contentMode = UIViewContentModeCenter;
+    tlnode.frame = CGRectMake(cropView.bounds.origin.x - NODE_SIZE / 2, cropView.bounds.origin.y - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
+    trnode.frame = CGRectMake(cropView.frame.size.width - NODE_SIZE / 2, cropView.bounds.origin.y - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
+    blnode.frame = CGRectMake(cropView.bounds.origin.x - NODE_SIZE / 2, cropView.frame.size.height - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
+    brnode.frame = CGRectMake(cropView.frame.size.width - NODE_SIZE / 2, cropView.frame.size.height - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
     
     tlnode.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     trnode.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
