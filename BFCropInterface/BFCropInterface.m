@@ -70,6 +70,8 @@
     UIImageView *trnode;
     UIImageView *blnode;
     UIImageView *brnode;
+
+    CGRect *cropBounds;
 }
 
 @end
@@ -111,9 +113,14 @@
             rect.size.height = self.frame.size.height / 4 * 3;
             rect.origin.x      = (self.frame.size.width - rect.size.width) / 2;
             rect.origin.y      = (self.frame.size.height - rect.size.height) / 2;
-            
+
+            self.cropBounds = rect;
+
             [self initialCropViewWithBounds:rect];
         } else {
+
+            self.cropBounds = cropBounds;
+
             [self initialCropViewWithBounds:cropBounds];
         }
     }
@@ -127,22 +134,26 @@
     
 //    UIView* cropView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     UIView *cropView = [[UIView alloc] initWithFrame:frame];
-    cropView.center = self.center;
+//    cropView.center = self.center;
     cropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     cropView.layer.borderColor = [[UIColor whiteColor] CGColor];
     cropView.layer.borderWidth = 0.5;
     cropView.backgroundColor = [UIColor clearColor];
+
+    UIImage *tlImage = [UIImage imageNamed:@"tlImage.png"];
+    UIImage *blImage = [UIImage imageNamed:@"blImage.png"];
+    UIImage *trImage = [UIImage imageNamed:@"trImage.png"];
+    UIImage *brImage = [UIImage imageNamed:@"brImage.png"];
     
-    tlnode = [[UIImageView alloc]initWithImage:self.nodeImage];
-    trnode = [[UIImageView alloc]initWithImage:self.nodeImage];
-    blnode = [[UIImageView alloc]initWithImage:self.nodeImage];
-    brnode = [[UIImageView alloc]initWithImage:self.nodeImage];
-    tlnode.contentMode = trnode.contentMode = blnode.contentMode = brnode.contentMode = UIViewContentModeCenter;
-    tlnode.frame = CGRectMake(cropView.bounds.origin.x - NODE_SIZE / 2, cropView.bounds.origin.y - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
-    trnode.frame = CGRectMake(cropView.frame.size.width - NODE_SIZE / 2, cropView.bounds.origin.y - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
-    blnode.frame = CGRectMake(cropView.bounds.origin.x - NODE_SIZE / 2, cropView.frame.size.height - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
-    brnode.frame = CGRectMake(cropView.frame.size.width - NODE_SIZE / 2, cropView.frame.size.height - NODE_SIZE / 2, NODE_SIZE, NODE_SIZE);
-    
+    tlnode = [[UIImageView alloc]initWithImage:tlImage];
+    trnode = [[UIImageView alloc]initWithImage:trImage];
+    blnode = [[UIImageView alloc]initWithImage:blImage];
+    brnode = [[UIImageView alloc]initWithImage:brImage];
+    tlnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.bounds.origin.y -13, 26, 26);
+    trnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.bounds.origin.y -13, 26, 26);
+    blnode.frame = CGRectMake(cropView.bounds.origin.x - 13, cropView.frame.size.height - 13, 26, 26);
+    brnode.frame = CGRectMake(cropView.frame.size.width - 13, cropView.frame.size.height - 13, 26, 26);
+
     tlnode.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     trnode.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
     blnode.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
