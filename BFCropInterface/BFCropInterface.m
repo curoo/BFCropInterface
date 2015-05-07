@@ -72,8 +72,6 @@
     UIImageView *brnode;
 }
 
-@property (nonatomic, assign) CGRect cropBounds;
-
 @end
 
 @implementation BFCropInterface
@@ -114,12 +112,8 @@
             rect.origin.x      = (self.frame.size.width - rect.size.width) / 2;
             rect.origin.y      = (self.frame.size.height - rect.size.height) / 2;
 
-            self.cropBounds = rect;
-
             [self initialCropViewWithBounds:rect];
         } else {
-
-            self.cropBounds = cropBounds;
 
             [self initialCropViewWithBounds:cropBounds];
         }
