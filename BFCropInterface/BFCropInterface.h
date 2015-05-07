@@ -25,28 +25,27 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BFCropInterface : UIImageView {
-    BOOL isPanning;
-    NSInteger currentTouches;
-    CGPoint panTouch;
-    CGFloat scaleDistance;
-    UIView *currentDragView; 
-    
-    UIView *topView;
-    UIView *bottomView;
-    UIView *leftView;
-    UIView *rightView;
-    
-    UIView *topLeftView;
-    UIView *topRightView;
-    UIView *bottomLeftView;
-    UIView *bottomRightView;
-}
+@interface BFCropInterface : UIImageView
+
 @property (nonatomic, assign) CGRect crop;
 @property (nonatomic, strong) UIView *cropView;
 @property (nonatomic, strong) UIColor *shadowColor;
 @property (nonatomic, strong) UIColor *borderColor;
+@property (nonatomic, strong) UIImage *nodeImage;
 
+/**
+ If YES, cropView will keep original aspectration (as set in cropView)
+ Default is NO
+ */
+@property (nonatomic) BOOL fixedAspectRatio;
+
+/**
+ Enable or disable single tap to resize cropView to tap coordinates.
+ Default is YES
+ */
+@property (nonatomic) BOOL allowTapToResize;
+
+- (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image andCropViewBounds:(CGRect)cropBounds;
 - (id)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
 - (UIImage*)getCroppedImage;
 
