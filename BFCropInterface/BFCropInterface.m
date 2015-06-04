@@ -489,13 +489,7 @@
 
 - (UIImage *)imageByCropping:(UIImage *)image toRect:(CGRect)rect
 {
-    if (UIGraphicsBeginImageContextWithOptions) {
-        UIGraphicsBeginImageContextWithOptions(rect.size,
-                                               /* opaque */ NO,
-                                               /* scaling factor */ 0.0);
-    } else {
-        UIGraphicsBeginImageContext(rect.size);
-    }
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
 
     // stick to methods on UIImage so that orientation etc. are automatically
     // dealt with for us
